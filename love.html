@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>I Love U ❤️</title>
   <style>
     body {
@@ -9,12 +10,14 @@
       font-family: 'Comic Sans MS', cursive;
       text-align: center;
       color: white;
-      overflow: hidden;
+      overflow-x: hidden;
+      margin: 0;
+      padding: 0 10px;
     }
 
     h1 {
       margin-top: 40px;
-      font-size: 2.5rem;
+      font-size: 2.2rem;
       animation: pop 1s ease-in-out infinite alternate;
     }
 
@@ -24,16 +27,18 @@
     }
 
     .btns {
-      margin-top: 40px;
+      margin-top: 30px;
+      position: relative;
+      min-height: 60px; /* Ensure NO button stays within view */
     }
 
     .btn {
-      padding: 15px 35px;
-      font-size: 1.3rem;
+      padding: 12px 25px;
+      font-size: 1rem;
       border: none;
       border-radius: 30px;
       cursor: pointer;
-      margin: 15px;
+      margin: 10px;
       transition: 0.3s;
       position: relative;
     }
@@ -54,34 +59,37 @@
 
     #gif {
       margin-top: 25px;
-      width: 250px;
+      width: 200px;
+      max-width: 80%;
       border-radius: 20px;
       animation: float 3s infinite ease-in-out;
     }
 
     @keyframes float {
       0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-15px); }
+      50% { transform: translateY(-10px); }
     }
 
     #message {
-      font-size: 1.6rem;
-      margin-top: 20px;
+      font-size: 1.2rem;
+      margin-top: 15px;
+      padding: 0 5px;
     }
 
     a {
       display: inline-block;
-      margin-top: 30px;
+      margin-top: 20px;
       text-decoration: none;
       color: white;
       background: #00000040;
-      padding: 10px 20px;
+      padding: 8px 16px;
       border-radius: 20px;
+      font-size: 0.95rem;
     }
 
     /* Popup Modal */
     .modal {
-      display: none;  /* ✅ Ab by default hidden hai */
+      display: none;
       position: fixed;
       z-index: 999;
       left: 0;
@@ -91,16 +99,17 @@
       background: rgba(0,0,0,0.7);
       justify-content: center;
       align-items: center;
+      padding: 10px;
     }
 
     .modal-content {
       background: white;
       color: #ff4e8a;
-      padding: 30px;
-      border-radius: 25px;
+      padding: 20px;
+      border-radius: 20px;
       text-align: center;
-      font-size: 1.5rem;
-      max-width: 400px;
+      font-size: 1.2rem;
+      max-width: 90%;
       box-shadow: 0px 5px 20px rgba(0,0,0,0.3);
       animation: popIn 0.6s ease;
     }
@@ -112,12 +121,30 @@
 
     .closeBtn {
       margin-top: 15px;
-      padding: 10px 20px;
+      padding: 8px 16px;
       background: #ff4e8a;
       color: white;
       border: none;
       border-radius: 20px;
       cursor: pointer;
+      font-size: 1rem;
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 768px) {
+      h1 { font-size: 1.8rem; margin-top: 30px; }
+      .btn { padding: 10px 20px; font-size: 0.95rem; }
+      #gif { width: 180px; }
+      #message { font-size: 1rem; }
+      .closeBtn { font-size: 0.95rem; padding: 7px 14px; }
+    }
+
+    @media (max-width: 480px) {
+      h1 { font-size: 1.5rem; margin-top: 25px; }
+      .btn { padding: 8px 18px; font-size: 0.9rem; }
+      #gif { width: 150px; }
+      #message { font-size: 0.95rem; }
+      .closeBtn { font-size: 0.9rem; padding: 6px 12px; }
     }
   </style>
 </head>
@@ -126,7 +153,7 @@
 
   <div class="btns">
     <button class="btn yes" id="yesBtn">YES 💕</button>
-    <button class="btn no" id="noBtn">NO </button>
+    <button class="btn no" id="noBtn">NO</button>
   </div>
 
   <p id="message"></p>
@@ -155,11 +182,10 @@
 
     // NO button runs away + Angry GIF
     noBtn.addEventListener("mouseover", () => {
-      const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
-      const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+      const x = Math.random() * (window.innerWidth - noBtn.offsetWidth - 20);
+      const y = Math.random() * (window.innerHeight - noBtn.offsetHeight - 20);
       noBtn.style.left = `${x}px`;
       noBtn.style.top = `${y}px`;
-
       gif.src = "https://media.tenor.com/YX2x6vKrrAcAAAAi/angry-mad.gif";
     });
 
@@ -167,7 +193,7 @@
     yesBtn.addEventListener("click", () => {
       message.innerHTML = "";
       gif.src = "https://media.tenor.com/hSja2trLIYwAAAAi/bubu-dudu-bubu-dudu-love.gif";
-      modal.style.display = "flex";   // ✅ Ab sirf YES click par open hoga
+      modal.style.display = "flex";
     });
 
     // Close popup
