@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>I Love U ❤️</title>
+  <style>
+    body {
+      background: linear-gradient(135deg, #ff758c, #ff7eb3);
+      font-family: 'Comic Sans MS', cursive;
+      text-align: center;
+      color: white;
+      overflow: hidden;
+    }
+
+    h1 {
+      margin-top: 40px;
+      font-size: 2.5rem;
+      animation: pop 1s ease-in-out infinite alternate;
+    }
+
+    @keyframes pop {
+      from { transform: scale(1); }
+      to { transform: scale(1.1); }
+    }
+
+    .btns {
+      margin-top: 40px;
+    }
+
+    .btn {
+      padding: 15px 35px;
+      font-size: 1.3rem;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      margin: 15px;
+      transition: 0.3s;
+      position: relative;
+    }
+
+    .yes {
+      background: #4CAF50;
+      color: white;
+    }
+    .yes:hover {
+      background: #45a049;
+    }
+
+    .no {
+      background: #f44336;
+      color: white;
+      position: absolute;
+    }
+
+    #gif {
+      margin-top: 25px;
+      width: 250px;
+      border-radius: 20px;
+      animation: float 3s infinite ease-in-out;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-15px); }
+    }
+
+    #message {
+      font-size: 1.6rem;
+      margin-top: 20px;
+    }
+
+    a {
+      display: inline-block;
+      margin-top: 30px;
+      text-decoration: none;
+      color: white;
+      background: #00000040;
+      padding: 10px 20px;
+      border-radius: 20px;
+    }
+
+    /* Popup Modal */
+    .modal {
+      display: none;  /* ✅ Ab by default hidden hai */
+      position: fixed;
+      z-index: 999;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.7);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background: white;
+      color: #ff4e8a;
+      padding: 30px;
+      border-radius: 25px;
+      text-align: center;
+      font-size: 1.5rem;
+      max-width: 400px;
+      box-shadow: 0px 5px 20px rgba(0,0,0,0.3);
+      animation: popIn 0.6s ease;
+    }
+
+    @keyframes popIn {
+      from { transform: scale(0.5); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .closeBtn {
+      margin-top: 15px;
+      padding: 10px 20px;
+      background: #ff4e8a;
+      color: white;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>Do you love me? ❤️</h1>
+
+  <div class="btns">
+    <button class="btn yes" id="yesBtn">YES 💕</button>
+    <button class="btn no" id="noBtn">NO </button>
+  </div>
+
+  <p id="message"></p>
+  <img id="gif" src="" alt="love gif">
+
+  <!-- Popup Modal -->
+  <div id="loveModal" class="modal">
+    <div class="modal-content">
+      <p>💖 You are my sunshine, my happiness, and my forever love.  
+      I’m the luckiest to have you in my life! 💕</p>
+      <p>“Best friend bolu ya meri zindagi ka sabse khaas insaan… tu meri duniya ka woh hissa hai jo replace hi nahi ho sakta. 
+        Tere bina sab adhoora lagta hai, aur tere saath sab perfect. ❤️”</p>
+      <button class="closeBtn" id="closeModal">Close</button>
+    </div>
+  </div>
+
+  <a href="index.html">⬅ Back</a>
+
+  <script>
+    const noBtn = document.getElementById("noBtn");
+    const yesBtn = document.getElementById("yesBtn");
+    const message = document.getElementById("message");
+    const gif = document.getElementById("gif");
+    const modal = document.getElementById("loveModal");
+    const closeModal = document.getElementById("closeModal");
+
+    // NO button runs away + Angry GIF
+    noBtn.addEventListener("mouseover", () => {
+      const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+      const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+      noBtn.style.left = `${x}px`;
+      noBtn.style.top = `${y}px`;
+
+      gif.src = "https://media.tenor.com/YX2x6vKrrAcAAAAi/angry-mad.gif";
+    });
+
+    // YES button → Hugging GIF + Open Popup
+    yesBtn.addEventListener("click", () => {
+      message.innerHTML = "";
+      gif.src = "https://media.tenor.com/hSja2trLIYwAAAAi/bubu-dudu-bubu-dudu-love.gif";
+      modal.style.display = "flex";   // ✅ Ab sirf YES click par open hoga
+    });
+
+    // Close popup
+    closeModal.addEventListener("click", () => {
+      modal.style.display = "none";
+    });
+  </script>
+</body>
+</html>

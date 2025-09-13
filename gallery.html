@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gallery - Birthday Surprise</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+      color: #fff;
+      text-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+    }
+
+    .slider {
+      position: relative;
+      width: 80%;
+      max-width: 900px;
+      margin: auto;
+      overflow: hidden;
+      border-radius: 15px;
+      box-shadow: 0px 5px 25px rgba(0,0,0,0.3);
+    }
+
+    .slides {
+      display: flex;
+      transition: transform 0.6s ease-in-out;
+      width: 100%;
+    }
+
+    .slides img {
+      width: 100%;
+      height: 500px;           /* ✅ All same height */
+      object-fit: cover;       /* ✅ Proper crop & fit */
+      flex-shrink: 0;
+      border-radius: 15px;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+
+    .slides img:hover {
+      transform: scale(1.05);
+    }
+
+    /* Navigation buttons */
+    .btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0,0,0,0.5);
+      color: white;
+      border: none;
+      font-size: 30px;
+      padding: 10px 15px;
+      cursor: pointer;
+      border-radius: 50%;
+      z-index: 10;
+    }
+
+    .btn:hover {
+      background: rgba(0,0,0,0.8);
+    }
+
+    .prev { left: 10px; }
+    .next { right: 10px; }
+
+    /* Popup Style */
+    .popup {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+
+    .popup img {
+      max-width: 90%;
+      max-height: 80%;
+      border-radius: 15px;
+      animation: zoomIn 0.5s ease;
+    }
+
+    .popup span {
+      position: absolute;
+      top: 20px;
+      right: 40px;
+      font-size: 40px;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    a {
+      display: block;
+      margin-top: 40px;
+      font-size: 1.2rem;
+      text-decoration: none;
+      color: #fff;
+      background: #ff4d6d;
+      padding: 12px 20px;
+      border-radius: 25px;
+      box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+      transition: 0.3s;
+    }
+    a:hover {
+      background: #e6004c;
+    }
+
+    @keyframes zoomIn {
+      from { transform: scale(0.5); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    /* ✅ Responsive: mobile ke liye chhoti height */
+    @media (max-width: 768px) {
+      .slides img {
+        height: 300px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .slides img {
+        height: 200px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>💖 Our Memories 💖</h1>
+  <div class="slider">
+    <div class="slides" id="slider">
+      <img src="images/hills.jpeg" alt="memory1">
+      <img src="images/holi.jpeg" alt="memory2">
+      <img src="images/holi2.jpeg" alt="memory3">
+      <img src="images/shadi.jpeg" alt="memory4">
+      <img src="images/shadi2.jpeg" alt="memory5">
+      <img src="images/shadi3.jpeg" alt="memory6">
+      <img src="images/sonegao3.jpeg" alt="memory7">
+      <img src="images/sonegavo.jpeg" alt="memory8">
+      <img src="images/songao2.jpeg" alt="memory9">
+      <img src="images/pune.jpeg" alt="memory10">
+      <img src="images/sonegao4.jpeg" alt="memory11">
+      <img src="images/pune2.jpeg" alt="memory12">
+    </div>
+    <button class="btn prev" onclick="prevSlide()">❮</button>
+    <button class="btn next" onclick="nextSlide()">❯</button>
+
+
+  </div>
+
+  <div>
+     <a href="index.html">⬅ Back</a>
+
+  </div>
+
+  <!-- Popup -->
+  <div class="popup" id="popup">
+    <span onclick="closePopup()">&times;</span>
+    <img id="popupImg" src="">
+  </div>
+
+  <script>
+    let index = 0;
+    const slider = document.getElementById("slider");
+    const slides = slider.children;
+    const totalSlides = slides.length;
+
+    function showSlide() {
+      slider.style.transform = `translateX(${-index * 100}%)`;
+    }
+
+    function nextSlide() {
+      index = (index + 1) % totalSlides;
+      showSlide();
+      showPopupAuto();
+    }
+
+    function prevSlide() {
+      index = (index - 1 + totalSlides) % totalSlides;
+      showSlide();
+      showPopupAuto();
+    }
+
+    // Auto Slide every 4 sec
+    setInterval(nextSlide, 4000);
+
+    // ✅ Popup function (auto open)
+     function showPopupAuto() {
+      const popup = document.getElementById("popup");
+      const popupImg = document.getElementById("popupImg");
+      popup.style.display = "flex";
+      popupImg.src = slides[index].src;
+
+      // 2 second baad popup close ho jayega
+      setTimeout(() => {
+        popup.style.display = "none";
+      }, 2000);
+    }
+
+    function closePopup() {
+      document.getElementById("popup").style.display = "none";
+    }
+
+    // ✅ First image load hone par popup open karna
+    window.onload = () => {
+      showPopupAuto();
+    };
+  </script>
+</body>
+</html>
